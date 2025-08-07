@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-backend
+  namespace: react-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-backend
+  template:
+    metadata:
+      labels:
+        app: react-backend
+    spec:
+      containers:
+      - name: react-backend
+        image: pangasathish/react-backend:v2
+        ports:
+        - containerPort: 8001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-backend
+  namespace: react-app
+spec:
+  type: ClusterIP
+  selector:
+    app: react-backend
+  ports:
+  - port: 8001
+    targetPort: 8001
